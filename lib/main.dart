@@ -6,12 +6,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cubit/counter_cubit.dart';
 
+
+
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final CounterCubit _counterCubit = CounterCubit();
+
+  @override
+  void dispose() {
+    _counterCubit.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +36,20 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: BlocProvider<CounterCubit>(
-        create: (context) => CounterCubit(),
-        child: const HomeScreen(title: 'Flutter Demo Home Page',),
-      ),
+      initialRoute: HomeScreen.id,
       routes: {
-        HomeScreen.id: (context) => const HomeScreen(title: 'Flutter Demo Home Page',),
-        NextScreen.id: (context) => const NextScreen(title: 'Next Screen',),
-        ThirdScreen.id: (context) => const ThirdScreen(title: 'Third Screen',),
+        HomeScreen.id: (context) => BlocProvider.value(
+          value: _counterCubit,
+            child: const HomeScreen(title: 'Flutter Demo Home Page',)
+        ),
+        NextScreen.id: (context) => BlocProvider.value(
+          value: _counterCubit,
+            child: const NextScreen(title: 'Next Screen',)
+        ),
+        ThirdScreen.id: (context) => BlocProvider.value(
+          value: _counterCubit,
+            child: const ThirdScreen(title: 'Third Screen',)
+        ),
       }
     );
   }

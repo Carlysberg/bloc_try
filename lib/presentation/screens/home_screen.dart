@@ -1,5 +1,6 @@
 import 'package:bloc_try/cubit/counter_cubit.dart';
 import 'package:bloc_try/presentation/screens/next_screen.dart';
+import 'package:bloc_try/presentation/screens/third_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -101,15 +102,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ElevatedButton(
                 onPressed: (){
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (_)=> BlocProvider.value(
-                              value: BlocProvider.of<CounterCubit>(context),
-                              child: const NextScreen(title: "Next Screen",))
-                      )
-                  );
+                  Navigator.of(context).pushNamed(NextScreen.id);
                 },
                 child: const Text("Next Screen")
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            ElevatedButton(
+                onPressed: (){
+                  Navigator.of(context).pushNamed(ThirdScreen.id);
+                },
+                child: const Text("Third Screen")
             )
           ],
         ),
