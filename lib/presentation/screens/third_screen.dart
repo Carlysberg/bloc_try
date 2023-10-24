@@ -2,17 +2,17 @@ import 'package:bloc_try/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NextScreen extends StatefulWidget {
-  static String id = 'next_screen';
-  const NextScreen({required this.title, super.key});
+class ThirdScreen extends StatefulWidget {
+  static String id = 'third_screen';
+  const ThirdScreen({required this.title, super.key});
 
   final String title;
 
   @override
-  _NextScreenState createState() => _NextScreenState();
+  _ThirdScreenState createState() => _ThirdScreenState();
 }
 
-class _NextScreenState extends State<NextScreen> {
+class _ThirdScreenState extends State<ThirdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

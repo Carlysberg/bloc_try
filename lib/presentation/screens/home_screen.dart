@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
+  static String id = 'home_screen';
   const HomeScreen({required this.title, super.key});
 
   final String title;

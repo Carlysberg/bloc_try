@@ -1,4 +1,6 @@
 import 'package:bloc_try/presentation/screens/home_screen.dart';
+import 'package:bloc_try/presentation/screens/next_screen.dart';
+import 'package:bloc_try/presentation/screens/third_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +25,11 @@ class MyApp extends StatelessWidget {
         create: (context) => CounterCubit(),
         child: const HomeScreen(title: 'Flutter Demo Home Page',),
       ),
+      routes: {
+        HomeScreen.id: (context) => const HomeScreen(title: 'Flutter Demo Home Page',),
+        NextScreen.id: (context) => const NextScreen(title: 'Next Screen',),
+        ThirdScreen.id: (context) => const ThirdScreen(title: 'Third Screen',),
+      }
     );
   }
 }
