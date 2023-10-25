@@ -1,12 +1,12 @@
-import 'package:bloc_try/cubit/counter_cubit.dart';
+import 'package:bloc_try/logic/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ThirdScreen extends StatefulWidget {
-  static String id = 'third_screen';
-  const ThirdScreen({required this.title, super.key});
+  const ThirdScreen({super.key, required this.title, required this.color});
 
   final String title;
+  final Color color;
 
   @override
   _ThirdScreenState createState() => _ThirdScreenState();
@@ -17,6 +17,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: widget.color,
         title: Text(widget.title),
       ),
       body: Center(
@@ -79,14 +80,17 @@ class _ThirdScreenState extends State<ThirdScreen> {
               children: [
                 FloatingActionButton(
                   heroTag: Text(widget.title),
+                  backgroundColor: widget.color,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
+                    // context.bloc<CounterCubit>().decrement();
                   },
                   tooltip: 'Decrement',
                   child: const Icon(Icons.remove),
                 ),
                 FloatingActionButton(
-                  heroTag: Text('${widget.title} #2'),
+                  backgroundColor: widget.color,
+                  heroTag: Text('${widget.title} 2nd'),
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increment();
                   },
@@ -98,6 +102,25 @@ class _ThirdScreenState extends State<ThirdScreen> {
             const SizedBox(
               height: 24,
             ),
+            // MaterialButton(
+            //   color: widget.color,
+            //   child: Text(
+            //     'Go to Second Screen',
+            //     style: TextStyle(color: Colors.white),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.of(context).push(
+            //       MaterialPageRoute<HomeScreen>(
+            //         builder: (context) {
+            //           return HomeScreen(
+            //             color: Colors.redAccent,
+            //             title: 'Second Screen',
+            //           );
+            //         },
+            //       ),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

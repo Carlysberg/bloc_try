@@ -1,22 +1,26 @@
-import 'package:bloc_try/cubit/counter_cubit.dart';
+import 'package:bloc_try/logic/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NextScreen extends StatefulWidget {
-  static String id = 'next_screen';
-  const NextScreen({required this.title, super.key});
+class SecondScreen extends StatefulWidget {
+  const SecondScreen({super.key,
+    required this.title,
+    required this.color,
+  });
 
   final String title;
+  final Color color;
 
   @override
-  _NextScreenState createState() => _NextScreenState();
+  _SecondScreenState createState() => _SecondScreenState();
 }
 
-class _NextScreenState extends State<NextScreen> {
+class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: widget.color,
         title: Text(widget.title),
       ),
       body: Center(
@@ -29,6 +33,7 @@ class _NextScreenState extends State<NextScreen> {
             BlocConsumer<CounterCubit, CounterState>(
               listener: (context, state) {
                 if (state.wasIncremented == true) {
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Incremented!'),
@@ -36,6 +41,8 @@ class _NextScreenState extends State<NextScreen> {
                     ),
                   );
                 } else if (state.wasIncremented == false) {
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Decremented!'),
@@ -79,16 +86,20 @@ class _NextScreenState extends State<NextScreen> {
               children: [
                 FloatingActionButton(
                   heroTag: Text(widget.title),
+                  backgroundColor: widget.color,
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
+                    // context.bloc<CounterCubit>().decrement();
                   },
                   tooltip: 'Decrement',
                   child: const Icon(Icons.remove),
                 ),
                 FloatingActionButton(
-                  heroTag: Text('${widget.title} #2'),
+                  backgroundColor: widget.color,
+                  heroTag: Text('${widget.title} 2nd'),
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increment();
+                    //context.bloc<CounterCubit>().increment();
                   },
                   tooltip: 'Increment',
                   child: const Icon(Icons.add),
@@ -97,6 +108,16 @@ class _NextScreenState extends State<NextScreen> {
             ),
             const SizedBox(
               height: 24,
+            ),
+            MaterialButton(
+              color: Colors.greenAccent,
+              child: const Text(
+                'Go to Third Screen',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/third');
+              },
             ),
           ],
         ),

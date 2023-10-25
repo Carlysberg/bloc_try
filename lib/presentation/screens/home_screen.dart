@@ -1,24 +1,24 @@
-import 'package:bloc_try/cubit/counter_cubit.dart';
-import 'package:bloc_try/presentation/screens/next_screen.dart';
-import 'package:bloc_try/presentation/screens/third_screen.dart';
+import 'package:bloc_try/logic/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String id = 'home_screen';
-  const HomeScreen({required this.title, super.key});
+  const HomeScreen({super.key, required this.title, required this.color});
 
   final String title;
+  final Color color;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: widget.color,
         title: Text(widget.title),
       ),
       body: Center(
@@ -83,12 +83,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   heroTag: Text(widget.title),
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
+                    // context.bloc<CounterCubit>().decrement();
                   },
                   tooltip: 'Decrement',
                   child: const Icon(Icons.remove),
                 ),
                 FloatingActionButton(
-                  heroTag: Text('${widget.title} #2'),
+                  heroTag: Text('${widget.title} 2nd'),
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increment();
                   },
@@ -100,21 +101,33 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 24,
             ),
-            ElevatedButton(
-                onPressed: (){
-                  Navigator.of(context).pushNamed(NextScreen.id);
-                },
-                child: const Text("Next Screen")
+            MaterialButton(
+              color: Colors.redAccent,
+              child: const Text(
+                'Go to Second Screen',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  '/second',
+                );
+              },
             ),
             const SizedBox(
               height: 24,
             ),
-            ElevatedButton(
-                onPressed: (){
-                  Navigator.of(context).pushNamed(ThirdScreen.id);
-                },
-                child: const Text("Third Screen")
-            )
+            MaterialButton(
+              color: Colors.greenAccent,
+              child: const Text(
+                'Go to Third Screen',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  '/third',
+                );
+              },
+            ),
           ],
         ),
       ),

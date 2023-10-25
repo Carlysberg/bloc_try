@@ -1,56 +1,31 @@
-import 'package:bloc_try/presentation/screens/home_screen.dart';
-import 'package:bloc_try/presentation/screens/next_screen.dart';
-import 'package:bloc_try/presentation/screens/third_screen.dart';
+import 'package:bloc_try/presentation/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'cubit/counter_cubit.dart';
 
-
+import 'logic/cubit/counter_cubit.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  final AppRouter _appRouter = AppRouter();
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final CounterCubit _counterCubit = CounterCubit();
-
-  @override
-  void dispose() {
-    _counterCubit.close();
-    super.dispose();
-  }
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return BlocProvider<CounterCubit>(
+      create: (context) => CounterCubit(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        onGenerateRoute: _appRouter.onGenerateRoute,
       ),
-      initialRoute: HomeScreen.id,
-      routes: {
-        HomeScreen.id: (context) => BlocProvider.value(
-          value: _counterCubit,
-            child: const HomeScreen(title: 'Flutter Demo Home Page',)
-        ),
-        NextScreen.id: (context) => BlocProvider.value(
-          value: _counterCubit,
-            child: const NextScreen(title: 'Next Screen',)
-        ),
-        ThirdScreen.id: (context) => BlocProvider.value(
-          value: _counterCubit,
-            child: const ThirdScreen(title: 'Third Screen',)
-        ),
-      }
     );
   }
 }
